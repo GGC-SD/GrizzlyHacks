@@ -12,4 +12,11 @@ export class LandingpageComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  setBackground() {
+    const styles = {
+      'background-image': 'url("/assets/background.png"), liner-gradient(rgb(105,118,144), rgb(40,39,37))',
+      'background-repeat': 'no-repeat'
+    };
+    return styles;
+  }
 }
