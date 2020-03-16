@@ -1,0 +1,11 @@
+<div>
+
+  <button (click)="router.navigate(['login'])"  *ngIf="auth.user === null">Login</button>
+
+  <button (click)="router.navigate(['createAccount'])" *ngIf="auth.user === null">Create Account</button>
+
+  <button (click)="router.navigate(['']); auth.sighOut()" *ngIf="auth.user">sign out</button>
+
+  <button routerLink="/dashboard" *ngIf="auth.user && auth.verified"> User Dashboard</button>
+
+</div>

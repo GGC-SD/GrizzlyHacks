@@ -1,0 +1,19 @@
+{
+  "hosting": [
+    {
+      "target": "GGCHacks",
+      "public": "dist/GGCHacks",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    }
+  ]
+}

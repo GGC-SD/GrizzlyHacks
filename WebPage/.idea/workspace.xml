@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9ab562ea-6b61-4bae-8e55-c32b25141f00" name="Default Changelist" comment="" />
+    <list default="true" id="9ab562ea-6b61-4bae-8e55-c32b25141f00" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -14,9 +16,10 @@
   <component name="ProjectId" id="1YGpGZXgxq3FDCS2bqw2eXlElGv" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../school/testing/PellGrantProject" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/GGCHacks" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -41,7 +44,23 @@
       <option name="presentableId" value="Default" />
       <updated>1582578690506</updated>
       <workItem from="1582578693618" duration="554000" />
+      <workItem from="1583780284202" duration="34000" />
+      <workItem from="1583780388750" duration="13000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

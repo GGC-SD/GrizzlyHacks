@@ -1,0 +1,38 @@
+<!-- for error messages use get(THing name)().invalid" use dirty or touched to cause error to come up-->
+
+<form [formGroup]="createAccountForm">
+
+  <p>First Name</p>
+  <input formControlName="firstName">
+  <p class="error" *ngIf="getFirstName().invalid && getFirstName().dirty && getFirstName().touched"> First Name Required</p>
+
+  <p>Last Name</p>
+  <input formControlName="lastName">
+  <p class="error" *ngIf="getLastName().invalid && getLastName().dirty && getLastName().touched"> Last Name Required</p>
+
+
+  <p>Email</p>
+  <input formControlName="email">
+  <div *ngIf="getEmail().dirty && getEmail().touched">
+    <p *ngIf="getEmail().hasError('required') && !getEmail().hasError('pattern')" class="error">Email Required</p>
+    <p *ngIf="!getEmail().hasError('required') && getEmail().hasError('pattern')" class="error">Email must be a edu email</p>
+  </div>
+
+
+  <p>Password</p>
+  <input formControlName="password">
+  <p class="error"  *ngIf="getPassword().hasError('doesntHaveCapitalCase')"> Password must contain Capital Letter</p>
+  <p class="error"  *ngIf="getPassword().hasError('doesntHaveNumber')"> Password must contain Number</p>
+  <p class="error"  *ngIf="getPassword().hasError('doesntHaveSmallCase')"> Password must contain lower case</p>
+  <p class="error"  *ngIf="getPassword().hasError('doesntHaveSpecialCharacters')"> Must have Special CHar</p>
+  <p class="error"  *ngIf="getPassword().hasError('minlength') || getPassword().hasError('maxlength')"> Password must be between 6 and 20 character</p>
+
+
+
+  <p>Confirm Passwod</p>
+  <input formControlName="cPassword">
+  <p *ngIf="getCPassword().invalid && getCPassword().dirty" class="error">Passwords Must Match</p>
+
+  <button (click)="auth.createUser(createAccountForm)" [disabled]="createAccountForm.invalid">Create Account</button>
+
+</form>

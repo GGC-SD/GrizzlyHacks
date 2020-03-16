@@ -1,0 +1,18 @@
+<h1> Login</h1>
+<form [formGroup]="loginForm" *ngIf="!passwordReset">
+  <p> email</p>
+  <input formControlName="email">
+  <p>Password</p>
+  <input formControlName="password">
+
+  <p (click)="passwordReset = true" id="link">Reset Password</p>
+
+  <button (click)="auth.loginUser(loginForm)">Login</button>
+</form>
+
+<div *ngIf="passwordReset">
+  <p> email</p>
+  <input #email>
+  <button (click)="auth.passwordRecovery(email.value)"> Reset Password</button>
+  <button (click)="passwordReset = false">back</button>
+</div>

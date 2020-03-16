@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "fir-test-420c8": {
+      "hosting": {
+        "GGCHacks": [
+          "fir-test-420c8"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+<div *ngIf="!isEditing">
+  <p> name: {{auth.user.firstName}} {{auth.user.lastName}}</p>
+  <p> email: {{auth.user.email}}</p>
+
+  <button (click)="isEditing = true">Edit</button>
+</div>
+
+<form [formGroup]="form" *ngIf="isEditing">
+  firstName:  <input formControlName="firstName"><p></p>
+  lastName: <input formControlName="lastName">
+  <p> email: {{auth.user.email}}</p>
+
+  <button (click)="isEditing = false">back</button>
+  <button (click)="submit(); isEditing = false">makeChanges</button>
+</form>
