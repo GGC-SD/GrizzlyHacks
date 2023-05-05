@@ -1,0 +1,123 @@
+<div>
+  <div class = "row justify-content-end">
+    <button class  = "btn btn-primary" *ngIf="auth.user && auth.user.adminLevel >= 1 && !isEditing" (click)="isEditing = true; add.hidden = false">Edit Calendar</button>
+    <button class = "btn btn-primary" *ngIf="auth.user && auth.user.adminLevel >= 1 && isEditing" (click)="isEditing = false; add.hidden = true">Exit</button>
+  </div>
+  <!-- not editing -->
+  <div class = "justify-content-center text-center">
+    <div *ngIf="!isEditing">
+      <div class = "col-lg">
+      <div *ngFor="let day of eventSer.keys">
+        <h4>{{ day }}</h4>
+        <div class = "calendar">
+          <div class = "table-editable">
+            <table class="table table-borderless">
+              <thead>
+              <tr>
+                <th scope = "col" colspan="2" style="width: 200px"><h5>Event</h5></th>
+                <th scope = "col"><h5>Start Time</h5></th>
+                <th scope = "col"><h5>End Time</h5></th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr  *ngFor="let event of eventSer.days.get(day)" >
+                <td colspan="2" style="width: 200px">
+                  <span> {{ event.title }}</span>
+                </td>
+                <td>
+                  <span> {{ event.startTime }}</span>
+                </td>
+                <td>
+                  <span> {{ event.endTime }}</span>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <div *ngIf="isEditing">
+      <div *ngFor="let day of eventSer.keys">
+        <h4>{{ day }}</h4>
+        <div class = "calendar">
+          <div class = "table-editable">
+            <table class="table table-borderless">
+              <thead>
+              <tr>
+                <th scope = "col"><h5>Event</h5></th>
+                <th scope = "col"><h5>Start Time</h5></th>
+                <th scope = "col"><h5>End Time</h5></th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let event of eventSer.days.get(day)">
+                <td>
+                  <input class = "form-control" [(ngModel)]="event.title">
+                </td>
+                <td>
+                  <input class = "form-control" data-toggle="tooltip" data-placement="bottom" title="Must be included and in form 00:00AM/PM" [(ngModel)]="event.startTime">
+                </td>
+                <td>
+                  <input class = "form-control" data-toggle="tooltip" data-placement="bottom" title="Must be included and in form 00:00AM/PM" [(ngModel)]="event.endTime">
+                </td>
+                <td>
+                  <button class="btn btn-primary" *ngIf="auth.user && auth.user.adminLevel >= 1 && isEditing" (click)="eventSer.updateEvent(event)">Update</button>
+                </td>
+                <td>
+                  <button class = "btn btn-primary" *ngIf="auth.user && auth.user.adminLevel >= 1 && isEditing" (click)="eventSer.deleteEvent(event)">Delete</button>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div #add hidden = "true">
+      <div class = "row justify-content-end">
+      </div>
+      <div>
+        <div class = "calendar">
+          <div class = "table-editable">
+            <h4>Add Event</h4>
+            <table class="table table-borderless">
+              <thead>
+              <tr>
+                <th scope = "col"><h5>Event</h5></th>
+                <th scope = "col"><h5>Start Time</h5></th>
+                <th scope = "col"><h5>End Time</h5></th>
+                <th scope = "col"><h5>Day of The Week</h5></th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td>
+                  <input class = "form-control"[(ngModel)]="tempEvent.title">
+                </td>
+                <td>
+                  <input class = "form-control" data-toggle="tooltip" data-placement="bottom" title="Must be included and in form 00:00AM/PM" [(ngModel)]="tempEvent.startTime">
+                </td>
+                <td>
+                  <input class = "form-control"  data-toggle="tooltip" data-placement="bottom" title="Must be included and in form 00:00AM/PM" [(ngModel)]="tempEvent.endTime">
+                </td>
+                <td>
+                  <select class = "form-control" [(ngModel)]="tempEvent.day">
+                    <option *ngFor="let opt of days" [value]="opt">{{opt}}</option>
+                  </select>
+                </td>
+                <td>
+                  <button class="btn btn-primary" *ngIf="auth.user && auth.user.adminLevel >= 1 && isEditing" (click)="eventSer.createEvent(tempEvent)">Add</button>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

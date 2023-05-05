@@ -1,0 +1,68 @@
+rules_version = '2';
+
+service cloud.firestore {
+
+  match /databases/{database}/documents {
+    
+    match /{documents=**} {
+      allow read: if true;
+			allow write: if isAdmin();
+    }
+      
+    //for user documents
+    match /users/{UserID} {
+      //allow write if they are an admin or a user that ownes the doc and are not tring to change isAdmin or acceptedToHack
+      allow write: if( 
+        //if is owner and not changing their admin status and not trying to accept to hack
+        ( isOwner( UserID ) && adminFieldSafe()  && hackAcceptanceSafe()));
+        allow read: if (isOwner(UserID));
+    }
+      
+    match /events/{document=**} {
+      allow read: if true;
+      allow write: if( isAdmin());
+    }
+      
+      
+    // checks if the requester is the owner of the document  wprks
+    function isOwner(userId) {
+      return request.auth.uid == userId;
+    }
+      
+    // checks if the requester is an admin
+    function isAdmin(){
+      return (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.adminLevel >= 1); 
+    }
+      
+    // checks if the requester is a super admin
+    function isSuperAdmin(){
+      return (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.adminLevel == 2); 
+    }
+
+    // checks if the requester is registered for the current year
+    function isRegisteredForCurrentYear(){
+      // Check if document exists
+      let userDoc = get(/databases/$(database)/documents/users/$(request.auth.uid));
+      // Check if 'registeredFor' field exists and contains current year
+      return (
+        userDoc.exists &&
+        userDoc.data.registeredFor != null &&
+        userDoc.data.registeredFor.hasOnly([request.time.year])
+      );
+    }
+
+    //checks to make sure incoming document doesnt change the admin feild
+    function adminFieldSafe(){
+      return !request.resource.data.isAdmin;
+    }
+      
+    function hackAcceptanceSafe(){
+      return (
+        request.resource.data.isRegisteredForCurrentYear == false ||
+        request.resource.data.registeredFor == get(/databases/$(database)/documents/users/$(request.auth.uid)).data.registeredFor
+      );
+    } 
+  }
+}
+  
+  

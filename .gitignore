@@ -102,3 +102,34 @@ dist
 
 # TernJS port file
 .tern-port
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# IDEs and editors
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+.vscode/
+.history/
+*.iml
+
+# GGCHacks
+environments/
+dist/
+tmp/
+out-tsc/
+bazel-out/
+node_modules/
+chrome-profiler-events*.json
+speed-measure-plugin*.json
+.angular/
+.sass-cache
+connect.lock
+coverage/
+/typings/

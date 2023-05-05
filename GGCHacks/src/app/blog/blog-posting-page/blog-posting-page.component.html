@@ -1,0 +1,31 @@
+<div class="everything">
+    <div class="row justify-content-center">
+        <div class="card w-50">
+            <form [formGroup]="blogPostingForm">
+                <div class="row justify-content-center">
+                    <h1>Blog Posting Page</h1>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="form-group">
+                        <label for="blogTitle">Title</label>
+                        <input class="form-control" id="blogTitle" placeholder="Title" formControlName="blogTitle">
+                    </div>
+                    <div class="form-group">
+                        <label for="blogAuthor">Author</label>
+                        <input class="form-control" id="blogAuthor" placeholder="Author" formControlName="blogAuthor">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="blogContent">Content</label>
+                    <textarea class="form-control" id="blogContent" rows="3" formControlName="blogContent">
+
+                    </textarea>
+                </div>
+                <div class="row justify-content-center">
+                    <button type="submit" class="btn btn-primary" (click)="postBlog()" [disabled]="blogPostingForm.invalid">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

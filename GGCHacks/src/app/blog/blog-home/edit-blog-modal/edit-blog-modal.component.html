@@ -1,0 +1,26 @@
+<div class="header">
+  <h4 class="modal-title">Edit Blog</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="editBlogForm">
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input type="text" class="form-control" id="title" formControlName="title">
+    </div>
+    <div class="form-group">
+      <label for="author">Author</label>
+      <input type="text" class="form-control" id="author" formControlName="author">
+    </div>
+    <div class="form-group">
+      <label for="content">Content</label>
+      <textarea class="form-control" rows="10" id="content" formControlName="content"></textarea>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss()">Cancel</button>
+  <button type="button" class="btn btn-primary" (click)="save()">Save</button>
+</div>

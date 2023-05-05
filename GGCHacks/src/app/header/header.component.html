@@ -1,0 +1,26 @@
+<nav class="navbar navbar-dark bg-dark">
+  <div>
+  <a class="navbar-brand" href="#">
+    <picture>
+      <img src="/assets/logo.png" width="150" height="150" alt="">
+    </picture>
+  </a>
+  </div>
+  <div class="justify-content-end">
+
+    <button class="btn btn-sm btn-outline-secondary" type="button"  routerLink="/home">Home</button>
+
+    <button class="btn btn-sm btn-outline-secondary" type="button"  routerLink="/blogHome">Blog</button>
+
+    <button class="btn btn-sm btn-outline-secondary" type="button" (click)="router.navigate(['login']);"  *ngIf="auth.user === null || !auth.verified">Log In</button>
+
+    <button class="btn btn-sm btn-outline-secondary" type="button" (click)="router.navigate(['createAccount']);" *ngIf="auth.user === null || !auth.verified">Create Account</button>
+
+    <button class="btn btn-sm btn-outline-secondary" type="button" routerLink="/user" *ngIf="auth.user !== null && auth.verified">User Dashboard</button>
+
+    <button class="btn btn-sm btn-outline-secondary" type="button" routerLink="/admin" *ngIf="auth.user !== null && auth.verified && auth.adminLevel > 0">Admin Dashboard</button>
+
+    <button class="btn btn-sm btn-outline-secondary" type="button" (click)="router.navigate(['']); auth.signOut()" *ngIf="auth.user !== null && !(!auth.verified && auth.user !== null)">Sign Out</button>
+
+  </div>
+</nav>

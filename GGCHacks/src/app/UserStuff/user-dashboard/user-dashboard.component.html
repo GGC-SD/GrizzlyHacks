@@ -1,0 +1,62 @@
+<div class="everything">
+  <div class="row justify-content-center">
+    <div class="card w-50">
+
+      <div *ngIf="!isEditing && auth.user != undefined">
+
+        <div class="card-title">
+          <h5>Welcome {{auth.user.firstName}} {{auth.user.lastName}}!</h5>
+        </div>
+
+        <div class="card-body">
+          <div *ngIf="!isEditing">
+            <p> Name: {{auth.user.firstName}} {{auth.user.lastName}}</p>
+            <p> Email: {{auth.user.email}}</p>
+
+            <div class="row justify-content-center">
+              <div class="col">
+                <button class="btn btn-primary" (click)="isEditing = true">Edit</button>
+              </div>
+            </div>
+            <div class="row justify-content-center">
+              <div class="col">
+                <button class="btn btn-primary" routerLink="/application"
+                        *ngIf="auth.user.application === null && !isRegisteredForCurrentYear(auth.user)">Create Application
+                </button>
+              </div>
+            </div>
+            <div class="row justify-content-center">
+              <div class="col">
+                <button class="btn btn-primary" routerLink="/application"
+                        *ngIf="auth.user.application !== null && !auth.appService.app.submitted">Edit Application
+                </button>
+              </div>
+            </div>
+            <div class="row justify-content-center">
+              <div class="col">
+                <button class="btn btn-primary" routerLink="/application"
+                        *ngIf="auth.user.application !== null && auth.appService.app.submitted">View Application
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="isEditing">
+        <label>First Name</label>
+        <input class="form-control" [(ngModel)]="auth.user.firstName">
+        <label class="pt-3">Last Name</label>
+        <input class="form-control" [(ngModel)]="auth.user.lastName">
+
+        <p class="pt-3">Email: {{auth.user.email}}</p>
+
+          <div class="row">
+            <button class="btn btn-primary" (click)="isEditing = false">Back</button>
+          </div>
+          <div class="row">
+            <button class="btn btn-primary" (click)="submit(); isEditing = false">Make Changes</button>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
