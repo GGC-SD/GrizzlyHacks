@@ -1,4 +1,4 @@
-#link{
+#link {
   color: #c9f8b8;
   cursor: pointer;
 }
@@ -7,30 +7,26 @@
   height: 100vh;
 }
 
-header{
+header {
   background: transparent !important;
 }
 
-body{
+body {
   background: transparent !important;
 }
 
-footer{
+footer {
   background: transparent !important;
 }
 
-.form{
+.form {
   align-content: center;
 }
 
-.card
-{
-  margin: 50px;
-  padding: 75px;
-}
+.card {}
 
-.btn{
+.btn {
   margin-top: 25px;
   margin-right: 10px;
-  color:var(--alternative-text-color);
+  color: var(--alternative-text-color);
 }
