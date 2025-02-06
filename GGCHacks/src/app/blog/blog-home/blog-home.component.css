@@ -1,5 +1,8 @@
 .card {
     background-color: #f2f2f2;
+    height: 25em;
+    box-shadow: 10px 5px 5px #424f64;
+    border-radius: 15px;
     padding: 0px;
     margin: 0px;
     color: black;
@@ -66,7 +69,8 @@ footer{
 }
 
 .card:hover {
-  transform: scale(1.02); /* Optional: change to effect scale on hover */
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px #000; /* Optional: change to effect scale on hover */
 }
 
 #blogSection{

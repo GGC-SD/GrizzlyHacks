@@ -6,33 +6,20 @@
       </div>
     </div>
     <div id="blogSection" *ngIf="blogs && blogs.length !== 0">
-      <div class="blog-cards" *ngFor="let blog of blogs; let i = index"> <!-- Include let i = index -->
-        <div class="row justify-content-center">
-          <div class="card custom-width h-80" [ngClass]="{'align-self-start': i % 2 === 0, 'align-self-end': i % 2 !== 0}">
-            <div class="row justify-content-center">
-              <h1 class="justify-content-center">{{blog.title}}</h1>
-            </div>
-            <div class="authorDateRow row">
-              <div class="col d-flex align-items-center"></div>
-              <div class="col-auto d-flex align-items-center">
-                <h6 class="content">By: {{blog.author}}, {{blog.datePosted.toDate().toLocaleDateString()}}</h6>
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col" *ngFor="let blog of blogs; let i = index">
+          <div class="card userHover" [ngClass]="{'align-self-start': i % 2 === 0, 'align-self-end': i % 2 !== 0}">
+            <div class="card-body text-center">
+              <h2 class="card-title">{{blog.title}}</h2>
+              <h6 class="card-subtitle mb-2 text-muted">By: {{blog.author}}, {{blog.datePosted.toDate().toLocaleDateString()}}</h6>
+              <p class="card-text">{{blog.content}}</p>
+              <div *ngIf="blog.link && blog.link.trim() !== ''">
+                <a [href]="blog.link" target="_blank" class="card-link">{{ blog.link }}</a>
               </div>
-              <div class="col d-flex align-items-right">
-                <ng-container *ngIf="auth?.user?.adminLevel === 2 && auth.verified">
-                  <button class="btn btn-primary" (click)="editBlog(blog)">Edit</button>
-                  <button class="btn btn-primary" (click)="deleteBlog(blog)">Delete</button>
-                </ng-container>
+              <div *ngIf="auth?.user?.adminLevel === 2 && auth.verified">
+                <button class="btn btn-primary" (click)="editBlog(blog)">Edit</button>
+                <button class="btn btn-danger" (click)="deleteBlog(blog)">Delete</button>
               </div>
-            </div>
-            <hr />
-            <div id="blog-content" class="row justify-content-left">
-              <p class="blog-content">{{blog.content}}</p>
-            </div>
-
-            <div *ngIf="blog.link && blog.link.trim() !== ''" class="row">
-              <p>
-                <a [href]="blog.link" target="_blank">{{ blog.link }}</a>
-              </p>
             </div>
           </div>
         </div>
@@ -43,5 +30,3 @@
 <footer>
   <app-footer></app-footer>
 </footer>
-
-

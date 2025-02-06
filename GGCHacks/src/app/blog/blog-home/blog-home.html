@@ -1,0 +1,47 @@
+<div class="everything">
+  <div *ngIf="blogs$ | async as blogs">
+    <div id="adminTools" class="row justify-content-center" *ngIf="auth?.user?.adminLevel === 2 && auth.verified">
+      <div class="card w-50 h-80">
+        <button class="btn btn-primary" routerLink="/blogPostingPage">Create Blog</button>
+      </div>
+    </div>
+    <div id="blogSection" *ngIf="blogs && blogs.length !== 0">
+      <div class="blog-cards" *ngFor="let blog of blogs; let i = index"> <!-- Include let i = index -->
+        <div class="row justify-content-center">
+          <div class="card custom-width h-80" [ngClass]="{'align-self-start': i % 2 === 0, 'align-self-end': i % 2 !== 0}">
+            <div class="row justify-content-center">
+              <h1 class="justify-content-center">{{blog.title}}</h1>
+            </div>
+            <div class="authorDateRow row">
+              <div class="col d-flex align-items-center"></div>
+              <div class="col-auto d-flex align-items-center">
+                <h6 class="content">By: {{blog.author}}, {{blog.datePosted.toDate().toLocaleDateString()}}</h6>
+              </div>
+              <div class="col d-flex align-items-right">
+                <ng-container *ngIf="auth?.user?.adminLevel === 2 && auth.verified">
+                  <button class="btn btn-primary" (click)="editBlog(blog)">Edit</button>
+                  <button class="btn btn-primary" (click)="deleteBlog(blog)">Delete</button>
+                </ng-container>
+              </div>
+            </div>
+            <hr />
+            <div id="blog-content" class="row justify-content-left">
+              <p class="blog-content">{{blog.content}}</p>
+            </div>
+
+            <div *ngIf="blog.link && blog.link.trim() !== ''" class="row">
+              <p>
+                <a [href]="blog.link" target="_blank">{{ blog.link }}</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<footer>
+  <app-footer></app-footer>
+</footer>
+
+
