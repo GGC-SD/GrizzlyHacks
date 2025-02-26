@@ -30,10 +30,10 @@
             </div>
 
             <div *ngIf="blog.link && blog.link.trim() !== ''" class="row">
-              <p>
-                <a [href]="blog.link" target="_blank">{{ blog.link }}</a>
-              </p>
-            </div>
+              <button (click)="openLink(blog.link)" class="btn btn-primary">
+                Click here to learn more!
+              </button>
+            </div>            
           </div>
         </div>
       </div>

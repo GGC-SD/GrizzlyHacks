@@ -31,7 +31,7 @@ export class CreateAccountComponent {
     this.createAccountForm = fb.group({
       firstName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(25)]],
       lastName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(25)]],
-      email: ['', [Validators.required, Validators.pattern('^\\w+@[a-zA-Z_]+?\\.[e]+[d]+[u]$')]],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', [
         Validators.required,
         Validators.minLength(6),

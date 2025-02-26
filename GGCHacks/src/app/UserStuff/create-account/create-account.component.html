@@ -35,10 +35,7 @@
                 <label>Email</label>
                 <input formControlName="email" class="form-control">
                 <div *ngIf="getEmail().dirty && getEmail().touched">
-                  <p *ngIf="getEmail().hasError('required') && !getEmail().hasError('pattern')" class="error">Email
-                    Required</p>
-                  <p *ngIf="!getEmail().hasError('required') && getEmail().hasError('pattern')" class="error">Email must
-                    be an .edu email.</p>
+                  
                 </div>
               </div>
             </div>

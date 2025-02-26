@@ -18,6 +18,8 @@ export class BlogHomeComponent implements OnInit {
   constructor(public auth: AuthService, private blogService: BlogService, private modalService: NgbModal) {
   }
 
+  
+
   ngOnInit(): void {
     this.blogs$ = this.blogService.blogs$;
   }
