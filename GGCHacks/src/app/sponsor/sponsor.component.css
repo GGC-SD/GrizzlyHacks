@@ -1,7 +1,27 @@
 .sponsor-section {
-    width: 80%;
-    margin: 0 auto;
-    font-family: Arial, sans-serif;
-    text-shadow: 0 0 3px #000000, 0 0 5px #000000;
-    text-align: center;
+  width: 80%;
+  margin: 0 auto;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.sponsor-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+}
+
+.sponsor-item {
+  flex: 0 0 auto;
+}
+
+.sponsor-logo {
+  height: 80px;
+  object-fit: contain;
+  transition: transform 0.3s;
+}
+
+.sponsor-logo:hover {
+  transform: scale(1.1);
 }

@@ -15,4 +15,8 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
   }
 
+  openExternalLink(url: string): void {
+    window.open(url, 'https://ggc.campusgroups.com/feeds?type=club&type_id=35493&tab=about');
+  }
+
 }

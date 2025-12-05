@@ -1,0 +1,140 @@
+/* Main Container */
+.firestore-editor-container {
+  max-width: 900px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Document Item */
+.document-item {
+  padding: 20px;
+  padding-left: 60px; /* Space for drag handle */
+  margin-bottom: 15px;
+  position: relative;
+  background: white;
+  border: 2px solid #e0e0e0 !important;
+  transition: all 0.3s ease;
+}
+
+/* Drag Zone (ONLY this is draggable) */
+.drag-handle-area {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 50px;
+  height: 100%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: move !important; /* Force move cursor only here */
+  color: white;
+  font-size: 18px;
+  transition: all 0.2s ease;
+  z-index: 10; /* Ensure it's above other content */
+}
+
+.drag-handle-area:hover {
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+  width: 55px;
+}
+
+.drag-handle-area i {
+  margin-bottom: 5px;
+  pointer-events: none; /* Prevent icon from interfering */
+}
+
+.drag-text {
+  font-size: 10px;
+  font-weight: bold;
+  writing-mode: vertical-lr;
+  text-orientation: upright;
+  letter-spacing: 2px;
+  margin-top: 5px;
+  pointer-events: none; /* Prevent text from interfering */
+}
+
+
+.document-content {
+  position: relative;
+  z-index: 5;
+  cursor: auto !important; /* Force normal cursor */
+  user-select: text; /* Allow text selection */
+  pointer-events: auto; /* Ensure all interactions work */
+  color: #00000f;
+}
+
+/* Order Badge */
+.order-badge {
+  position: absolute;
+  top: 10px;
+  right: 60px;
+  font-size: 12px;
+  padding: 4px 8px;
+  background: #667eea !important;
+  font-weight: 600;
+}
+
+/* Delete Button */
+.delete-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 4px 8px;
+  font-size: 12px;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+/* When dragging */
+.cdk-drag-dragging {
+  opacity: 0.5;
+  box-shadow: none;
+}
+
+/* Drag preview */
+.drag-preview .card {
+  background: white;
+  border: 2px solid #667eea;
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 8px;
+  opacity: 0.95;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0.3;
+  background: #e0e0e0;
+  border: 2px dashed #667eea;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.documents-list.cdk-drop-list-dragging .document-item:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+/* Document Fields */
+.document-fields {
+  display: grid;
+  gap: 15px;
+}
+
+.document-item:not(.cdk-drag-dragging) {
+  cursor: default !important; /* Ensure default cursor when not dragging */
+}
+
+.document-content input,
+.document-content textarea,
+.document-content button,
+.document-content select,
+.document-content .form-check-input {
+  cursor: auto !important;
+  pointer-events: auto !important;
+}
+/* Rest of your existing CSS... */

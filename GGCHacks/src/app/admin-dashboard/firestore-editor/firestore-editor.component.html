@@ -1,0 +1,184 @@
+<!-- ============================= -->
+<!-- 🔧 FIRESTORE CONTENT EDITOR -->
+<!-- ============================= -->
+
+<div class="card mt-4 mx-auto firestore-editor-container">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h3><i class="fas fa-database me-2"></i> Firestore Content Editor</h3>
+    <span *ngIf="isSaving" class="badge bg-warning">
+      <i class="fas fa-sync fa-spin me-1"></i> Saving...
+    </span>
+  </div>
+
+  <div class="card-body">
+    <!-- Collection Selector -->
+    <div class="form-group mb-3">
+      <label for="collectionSelect" class="form-label fw-bold">Select Collection:</label>
+      <select id="collectionSelect"
+              class="form-select"
+              [(ngModel)]="selectedCollection"
+              (change)="loadFirestoreCollection(selectedCollection)">
+        <option value="">-- Select Collection --</option>
+        <option value="faqs">FAQs</option>
+        <option value="sponsors">Sponsors</option>
+        <option value="flyers">Flyers</option>
+      </select>
+    </div>
+
+
+    <!-- Drag and Drop List -->
+    <div *ngIf="firestoreDocs.length > 0"
+         cdkDropList
+         [cdkDropListData]="firestoreDocs"
+         (cdkDropListDropped)="onDrop($event)"
+         class="documents-list">
+
+      <!-- Document Items -->
+      <div *ngFor="let doc of firestoreDocs; let i = index"
+           class="document-item border rounded bg-light mb-3 position-relative"
+           cdkDrag
+           [cdkDragBoundary]="'.documents-list'">
+
+        <!-- ONLY Drag Handle Area (This is the ONLY draggable part) -->
+        <div cdkDragHandle class="drag-handle-area">
+          <i class="fas fa-grip-vertical"></i>
+          <span class="drag-text">DRAG</span>
+        </div>
+
+        <!-- Order Badge -->
+        <span class="order-badge badge bg-primary">
+      #{{ doc.order }}
+    </span>
+
+        <!-- Delete Button (Top Right) -->
+        <button class="btn btn-sm btn-danger delete-btn"
+                (click)="deleteFirestoreDoc(doc)"
+                [disabled]="flyerMinimumReached"
+                title="Delete Document">
+        <i class="fas fa-trash"></i>
+        </button>
+
+        <!-- Document Content (NOT draggable) -->
+        <div class="document-content">
+          <!-- Document Title/Preview -->
+          <div class="document-header mb-2">
+            <strong class="text-primary">{{ getDocumentDisplayName(doc) }}</strong>
+          </div>
+
+          <!-- Document Fields -->
+          <div class="document-fields">
+            <div *ngFor="let key of getKeys(doc)" class="field-group">
+
+              <!-- Field Label -->
+              <label class="form-label fw-semibold">
+                {{ formatFieldLabel(key) }}:
+              </label>
+
+              <!-- Text Input -->
+              <input *ngIf="getInputType(key, doc[key]) === 'text'"
+                     class="form-control form-control-sm"
+                     type="text"
+                     [(ngModel)]="doc[key]"
+                     [placeholder]="'Enter ' + formatFieldLabel(key)"/>
+
+              <!-- Textarea -->
+              <textarea *ngIf="getInputType(key, doc[key]) === 'textarea'"
+                        class="form-control form-control-sm"
+                        rows="3"
+                        [(ngModel)]="doc[key]"
+                        [placeholder]="'Enter ' + formatFieldLabel(key)"></textarea>
+
+              <!-- URL Input -->
+              <input *ngIf="getInputType(key, doc[key]) === 'url'"
+                     class="form-control form-control-sm"
+                     type="url"
+                     [(ngModel)]="doc[key]"
+                     placeholder="Enter URL"/>
+
+              <!-- Checkbox -->
+              <div *ngIf="getInputType(key, doc[key]) === 'checkbox'"
+                   class="form-check">
+                <input class="form-check-input"
+                       type="checkbox"
+                       [(ngModel)]="doc[key]"
+                       [id]="'check-' + i + '-' + key"/>
+                <label class="form-check-label" [for]="'check-' + i + '-' + key">
+                  {{ doc[key] ? 'Active' : 'Inactive' }}
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Save Button -->
+          <div class="document-actions mt-3">
+            <button class="btn btn-success btn-sm"
+                    (click)="updateFirestoreDoc(doc)">
+              <i class="fas fa-save me-1"></i> Save Changes
+            </button>
+          </div>
+        </div>
+
+        <!-- Drag Preview Template -->
+        <div *cdkDragPreview class="drag-preview">
+          <div class="card shadow">
+            <div class="card-body">
+              <strong>{{ getDocumentDisplayName(doc) }}</strong>
+              <span class="badge bg-primary ms-2">Order: {{ doc.order }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add New Document Buttons -->
+    <div class="add-document-section mt-4">
+      <!-- Add New FAQ Button -->
+      <div *ngIf="selectedCollection === 'faqs'" class="text-center">
+        <button class="btn btn-outline-success" (click)="addNewFaq()">
+          <i class="fas fa-plus me-1"></i> Add New FAQ
+        </button>
+      </div>
+
+      <!-- Add New Sponsor Button -->
+      <div *ngIf="selectedCollection === 'sponsors'" class="text-center">
+        <button class="btn btn-outline-success" (click)="addNewSponsor()">
+          <i class="fas fa-plus me-1"></i> Add New Sponsor
+        </button>
+      </div>
+
+      <!-- Add New Flyer Button -->
+      <div *ngIf="selectedCollection === 'flyers'" class="text-center">
+        <button class="btn btn-outline-success"
+                (click)="addNewFlyer()"
+                [disabled]="flyerLimitReached">
+          <i class="fas fa-plus me-1"></i> Add New Flyer
+        </button>
+      </div>
+    </div>
+
+    <!-- Empty State Message -->
+    <div *ngIf="selectedCollection && firestoreDocs.length === 0"
+         class="empty-state text-muted text-center mt-4 p-4">
+      <i class="fas fa-inbox fa-3x mb-3"></i>
+      <p>No documents found in this collection.</p>
+
+      <button *ngIf="selectedCollection === 'faqs'"
+              class="btn btn-primary"
+              (click)="addNewFaq()">
+        <i class="fas fa-plus me-1"></i> Create First FAQ
+      </button>
+
+      <button *ngIf="selectedCollection === 'sponsors'"
+              class="btn btn-primary"
+              (click)="addNewSponsor()">
+        <i class="fas fa-plus me-1"></i> Add First Sponsor
+      </button>
+
+      <button *ngIf="selectedCollection === 'flyers'"
+              class="btn btn-primary"
+              (click)="addNewFlyer()">
+        <i class="fas fa-plus me-1"></i> Add First Flyer
+      </button>
+    </div>
+  </div>
+</div>

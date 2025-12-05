@@ -1,17 +1,21 @@
 //Module Imports
 import { BrowserModule } from "@angular/platform-browser";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgModule } from "@angular/core";
 import { HttpClientModule } from "@angular/common/http";
 import { CommonModule } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { AppRoutingModule } from "./modules/app-routing.module";
+import { DragDropModule } from "@angular/cdk/drag-drop";
+import { FirestoreEditorComponent } from "./admin-dashboard/firestore-editor/firestore-editor.component";
 
 //FireBase Imports
 import { AngularFireAuthModule } from "@angular/fire/compat/auth";
 import { AngularFireModule } from "@angular/fire/compat";
 import { AngularFirestoreModule } from "@angular/fire/compat/firestore";
 import { AngularFireStorageModule } from "@angular/fire/compat/storage";
+
 import { environment } from "../environments/environment";
 
 //Components
@@ -35,12 +39,11 @@ import { AdminDashboardComponent } from "./admin-dashboard/admin-dashboard.compo
 import { TestNavbarComponent } from "./test-navbar/test-navbar.component";
 import { FooterComponent } from "./footer/footer.component";
 import { FaqComponent } from "./faq/faq-section";
-import { ProjectSubmissionComponent } from "./project-submission/project-submission.component";
 import { EventCreatorComponent } from "./admin-dashboard/event-creator/event-creator.component";
 import { EditEventModalComponent } from "./admin-dashboard/edit-event-modal/edit-event-modal.component";
 import { SponsorComponent } from "./sponsor/sponsor.component";
-import { TimelineComponent } from './timeline/timeline.component';
-import { AdminTimelineComponent } from './admin-timeline/admin-timeline.component';
+import {RegistrationComponent} from './registration/registration.component';
+import { ViewScheduleComponent } from './viewSchedule/view-schedule.component';
 import { JudgeTrackerComponent } from "./judge-tracker/judge-tracker.component";
 
 
@@ -66,16 +69,17 @@ import { JudgeTrackerComponent } from "./judge-tracker/judge-tracker.component";
     TestNavbarComponent,
     FooterComponent,
     FaqComponent,
-    ProjectSubmissionComponent,
     EventCreatorComponent,
     EditEventModalComponent,
     SponsorComponent,
-    TimelineComponent,
-    AdminTimelineComponent,
+    RegistrationComponent,
+    ViewScheduleComponent,
     JudgeTrackerComponent,
+    FirestoreEditorComponent,
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
     CommonModule,
@@ -86,6 +90,7 @@ import { JudgeTrackerComponent } from "./judge-tracker/judge-tracker.component";
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
+    DragDropModule,
   ],
 
   providers: [],

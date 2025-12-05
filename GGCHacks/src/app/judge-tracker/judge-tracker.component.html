@@ -1,35 +1,14 @@
 <div class="container">
-    <h2>Add Judge</h2>
-  
-    <input type="text" [(ngModel)]="newFirstName" placeholder="First Name" class="input-field"/>
-    <input type="text" [(ngModel)]="newLastName" placeholder="Last Name" class="input-field"/>
-  
-    <h4>Hackathons</h4>
-    <input type="text" [(ngModel)]="newHackathon" placeholder="Hackathon Name" class="input-field"/>
-    <button (click)="addHackathon()" class="btn">Add Hackathon</button>
-  
-    <ul>
-      <li *ngFor="let h of hackathonList">{{ h }}</li>
-    </ul>
-  
-    <button (click)="addJudge()" class="btn btn-primary">Add Judge</button>
-  
-    <hr />
-  
-    <h2>Judges List</h2>
-    <ul>
-      <li *ngFor="let judge of judges" class="judge-card">
-        
+  <h2 class="page-title">Workshop Slides</h2>
 
-
-        <strong>{{ judge.firstName }} {{ judge.lastName }}</strong>
-        <p>Judging the following hackathons:</p>
-
-        <ul *ngIf="judge.hackathons?.length">
-          <li *ngFor="let hack of judge.hackathons">• {{ hack }}</li>
-        </ul>
-        <button (click)="removeJudge(judge.firstName, judge.lastName)" class="btn btn-danger">Remove Judge</button>
-      </li>
-</ul>
+  <!-- PDF Display -->
+  <div class="pdf-container">
+    <iframe
+      src="assets/HACKGGC%20-%20LET'S%20HACK%20FALL%202025%201.pdf"
+      width="100%"
+      height="800px"
+      style="border: none;">
+    </iframe>
   </div>
-  
+
+</div>

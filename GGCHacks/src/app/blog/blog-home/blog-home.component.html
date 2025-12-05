@@ -1,40 +1,92 @@
-<div class="everything">
-  <ng-container *ngIf="blogs$ | async as blogs">
-    
-    <!-- Admin Tools -->
-    <div *ngIf="auth?.user?.adminLevel === 2 && auth.verified" class="row justify-content-center mb-4">
-      <div class="text-center p-3">
-        <button routerLink="/blogPostingPage">Create Blog</button>
-      </div>
+<div class="gallery-container">
+  <!-- Hero Section -->
+  <div class="gallery-hero">
+    <h1>Event Gallery</h1>
+    <p>Relive the memories from our hackathons</p>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading-container">
+    <div class="spinner-border text-primary" role="status">
+      <span class="sr-only">Loading...</span>
     </div>
+  </div>
 
-    <!-- Blog Section -->
-    <section id="blogSection" *ngIf="blogs.length > 0">
-      <div class="row row-cols-1 row-cols-md-3 g-4">
-        <div class="col" *ngFor="let blog of blogs; let i = index">
-          <div class="card userHover" [ngClass]="{'align-self-start': i % 2 === 0, 'align-self-end': i % 2 !== 0}">
-            <div class="card-body text-center">
-              <h2 class="card-title">{{blog.title}}</h2>
-              <h6 class="card-subtitle mb-2 text-muted">By: {{blog.author}}, {{blog.datePosted.toDate().toLocaleDateString()}}</h6> <!-- Redone into event instead of blog, may want to clean up wording-->
-              <p class="card-text">{{blog.content}}</p>
-              <div *ngIf="blog.link && blog.link.trim() !== ''">
-                <a [href]="blog.link" target="_blank" class="btn btn-secondary">Visit Link</a>
+  <!-- Galleries Grid -->
+  <div *ngIf="!isLoading" class="galleries-section">
+    <div class="container">
+      <div class="row">
+        <div *ngFor="let gallery of galleries" class="col-lg-4 col-md-6 mb-4">
+          <div class="gallery-card">
+            <!-- Cover Image -->
+            <div class="gallery-image" (click)="openLightbox(gallery, 0)">
+              <img [src]="getCoverImage(gallery)" [alt]="gallery.eventName">
+              <div class="photo-count">
+                <i class="fas fa-camera"></i> {{ gallery.photos?.length || 0 }}
               </div>
+            </div>
 
-              <!-- Admin Blog Controls -->
-              <div *ngIf="auth?.user?.adminLevel === 2 && auth.verified">
-                <button class="btn btn-primary" (click)="editBlog(blog)">Edit</button>
-                <button class="btn btn-danger" (click)="deleteBlog(blog)">Delete</button>
+            <!-- Gallery Info -->
+            <div class="gallery-body">
+              <h3>{{ gallery.eventName }}</h3>
+              <p class="event-date">
+                <i class="fas fa-calendar"></i> {{ gallery.eventDate }}
+              </p>
+              <p class="description">{{ gallery.description }}</p>
+
+              <!-- Photo Grid Preview -->
+              <div class="photo-grid-preview">
+                <div *ngFor="let photo of gallery.photos.slice(0, 4); let i = index"
+                     class="photo-thumb"
+                     (click)="openLightbox(gallery, i)">
+                  <img [src]="photo" [alt]="'Photo ' + (i + 1)">
+                  <div *ngIf="i === 3 && gallery.photos.length > 4" class="more-overlay">
+                    +{{ gallery.photos.length - 4 }}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </section>
 
-  </ng-container>
+      <!-- Empty State -->
+      <div *ngIf="galleries.length === 0" class="empty-state">
+        <i class="fas fa-camera fa-4x"></i>
+        <h3>No galleries yet</h3>
+        <p>Check back soon for event photos!</p>
+      </div>
+
+      <!-- Admin Button -->
+      <div *ngIf="auth.adminLevel > 0" class="text-center mt-4">
+        <button class="btn btn-success" routerLink="/blog-posting">
+          <i class="fas fa-plus"></i> Add New Gallery
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lightbox Modal -->
+  <div *ngIf="selectedGallery" class="lightbox" (click)="closeLightbox()">
+    <div class="lightbox-content" (click)="$event.stopPropagation()">
+      <button class="btn-close" (click)="closeLightbox()">×</button>
+
+      <button class="btn-nav btn-prev" (click)="previousPhoto()"
+              *ngIf="selectedGallery.photos.length > 1">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+
+      <img [src]="selectedGallery.photos[selectedPhotoIndex]"
+           [alt]="selectedGallery.eventName">
+
+      <button class="btn-nav btn-next" (click)="nextPhoto()"
+              *ngIf="selectedGallery.photos.length > 1">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+
+      <div class="photo-counter">
+        {{ selectedPhotoIndex + 1 }} / {{ selectedGallery.photos.length }}
+      </div>
+    </div>
+  </div>
 </div>
-
-<footer>
-  <app-footer></app-footer>
-</footer>

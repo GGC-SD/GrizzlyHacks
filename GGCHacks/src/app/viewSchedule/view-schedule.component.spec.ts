@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AdminTimelineComponent } from './admin-timeline.component';
+import { ViewScheduleComponent } from './view-schedule.component';
 
 describe('AdminTimelineComponent', () => {
-  let component: AdminTimelineComponent;
-  let fixture: ComponentFixture<AdminTimelineComponent>;
+  let component: ViewScheduleComponent;
+  let fixture: ComponentFixture<ViewScheduleComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AdminTimelineComponent ]
+      declarations: [ ViewScheduleComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AdminTimelineComponent);
+    fixture = TestBed.createComponent(ViewScheduleComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -3,6 +3,6 @@
     "default": "grizzly-hacks",
     "GGCHacks": "grizzly-hacks"
   },
-
+  "targets": {},
   "etags": {}
 }
