@@ -1,40 +1,93 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { AuthService } from 'src/app/services/auth.service';
-import { Blog, BlogService } from 'src/app/services/blog.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { EditBlogModalComponent } from './edit-blog-modal/edit-blog-modal.component';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
+import { map } from 'rxjs/operators';
+
+interface EventGallery {
+  id?: string;
+  eventName: string;
+  eventDate: string;
+  description: string;
+  photos: string[];
+  coverImage?: string;
+  order?: number;
+  isActive: boolean;
+  createdAt?: Date;
+}
 
 @Component({
   selector: 'app-blog-home',
   templateUrl: './blog-home.component.html',
-  styleUrls: ['./blog-home.component.css'],
-  providers: [BlogService]
+  styleUrls: ['./blog-home.component.css']
 })
 export class BlogHomeComponent implements OnInit {
-  blogs$: Observable<Blog[]>;
+  galleries: EventGallery[] = [];
+  isLoading = true;
+  selectedGallery: EventGallery | null = null;
+  selectedPhotoIndex = 0;
 
-  constructor(public auth: AuthService, private blogService: BlogService, private modalService: NgbModal) {
-  }
+  constructor(
+    private firestore: AngularFirestore,
+    private router: Router,
+    public auth: AuthService
+  ) {}
 
   ngOnInit(): void {
-    this.blogs$ = this.blogService.blogs$;
+    this.loadGalleries();
   }
 
-  editBlog(blog: Blog): void {
-    const modalRef = this.modalService.open(EditBlogModalComponent, { ariaLabelledBy: 'modal-basic-title' });
-    modalRef.componentInstance.blogToEdit = { ...blog };
-    modalRef.result.then((result) => {
-      console.log(`Closed with: ${result}`);
-    }, (reason) => {
-      console.log(`Dismissed ${reason}`);
-    });
+  loadGalleries(): void {
+    this.firestore.collection<EventGallery>('galleries', ref =>
+      ref.where('isActive', '==', true).orderBy('order', 'asc')
+    )
+      .valueChanges({ idField: 'id' })
+      .subscribe({
+        next: (galleries) => {
+          this.galleries = galleries;
+          this.isLoading = false;
+        },
+        error: (err) => {
+          // Fallback without order if index doesn't exist
+          this.firestore.collection<EventGallery>('galleries', ref =>
+            ref.where('isActive', '==', true)
+          )
+            .valueChanges({ idField: 'id' })
+            .subscribe(galleries => {
+              this.galleries = galleries.sort((a, b) => (a.order || 999) - (b.order || 999));
+              this.isLoading = false;
+            });
+        }
+      });
   }
 
-  deleteBlog(blog: Blog): void {
-    if (confirm("Are you sure you want to delete this blog?")) {
-      this.blogService.deleteBlog(blog);
+  openLightbox(gallery: EventGallery, photoIndex: number): void {
+    this.selectedGallery = gallery;
+    this.selectedPhotoIndex = photoIndex;
+    document.body.style.overflow = 'hidden';
+  }
+
+  closeLightbox(): void {
+    this.selectedGallery = null;
+    document.body.style.overflow = 'auto';
+  }
+
+  nextPhoto(): void {
+    if (this.selectedGallery) {
+      this.selectedPhotoIndex =
+        (this.selectedPhotoIndex + 1) % this.selectedGallery.photos.length;
     }
+  }
+
+  previousPhoto(): void {
+    if (this.selectedGallery) {
+      this.selectedPhotoIndex = this.selectedPhotoIndex === 0
+        ? this.selectedGallery.photos.length - 1
+        : this.selectedPhotoIndex - 1;
+    }
+  }
+
+  getCoverImage(gallery: EventGallery): string {
+    return gallery.coverImage || gallery.photos?.[0] || 'assets/images/placeholder.png';
   }
 }

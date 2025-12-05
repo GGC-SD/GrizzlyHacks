@@ -1,36 +1,61 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { BlogHomeComponent } from './blog-home.component';
-import { AuthService } from 'src/app/services/auth.service';
-import { BlogService, Blog } from 'src/app/services/blog.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { of } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
-class MockAuthService {}
-class MockBlogService {
-  blogs$ = of<Blog[]>([]);
+export interface EventGallery {
+  id?: string;
+  eventName: string;
+  eventDate: string;
+  description: string;
+  photos: string[];  // Array of photo URLs
+  coverImage?: string;  // Main image for the card
+  order?: number;
+  isActive: boolean;
+  createdAt?: Date;
+  author?: string;  // Can be event organizer
 }
-class MockNgbModal {}
 
-describe('BlogHomeComponent', () => {
-  let component: BlogHomeComponent;
-  let fixture: ComponentFixture<BlogHomeComponent>;
+@Injectable({
+  providedIn: 'root'
+})
+export class BlogService {
+  constructor(private firestore: AngularFirestore) { }
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [BlogHomeComponent],
-      providers: [
-        { provide: AuthService, useClass: MockAuthService },
-        { provide: BlogService, useClass: MockBlogService },
-        { provide: NgbModal, useClass: MockNgbModal },
-      ],
-    }).compileComponents();
+  // Get all active galleries
+  getGalleries(): Observable<EventGallery[]> {
+    return this.firestore.collection<EventGallery>('galleries', ref =>
+      ref.where('isActive', '==', true)
+        .orderBy('order', 'asc')
+    ).snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as EventGallery;
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      }))
+    );
+  }
 
-    fixture = TestBed.createComponent(BlogHomeComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+  // Get single gallery by ID
+  getGalleryById(id: string): Observable<EventGallery | undefined> {
+    return this.firestore.doc<EventGallery>(`galleries/${id}`).valueChanges();
+  }
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+  // Add new gallery
+  addGallery(gallery: EventGallery): Promise<any> {
+    return this.firestore.collection('galleries').add({
+      ...gallery,
+      createdAt: new Date()
+    });
+  }
+
+  // Update gallery
+  updateGallery(id: string, gallery: Partial<EventGallery>): Promise<void> {
+    return this.firestore.doc(`galleries/${id}`).update(gallery);
+  }
+
+  // Delete gallery
+  deleteGallery(id: string): Promise<void> {
+    return this.firestore.doc(`galleries/${id}`).delete();
+  }
+}

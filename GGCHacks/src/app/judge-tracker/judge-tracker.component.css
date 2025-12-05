@@ -1,45 +1,35 @@
-.hackathon-input {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 10px;
-  }
-  
-  .hackathon-input .input-field {
-    flex: 1;
-  }
-  
-  .btn {
-    padding: 8px 12px;
-    background-color: black;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .btn:hover {
-    background-color: green;
-  }
-  
+.container {
+  max-width: 80%;
+  margin: auto;
+  text-align: center;
+  padding-top: 20px;
+}
 
-  
-  .hackathon-list {
-    margin-left: 15px;
-    margin-top: 5px;
-  }
-  
-  .btn-danger {
-    margin-top: 10px;
-    background-color: #dc3545;
-    color: white;
-    border: none;
-    padding: 6px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .btn-danger:hover {
-    background-color: #c82333;
-  }
-  
+/* Title style (optional, matches your layout) */
+.page-title {
+  margin-bottom: 20px;
+}
+
+/* PDF Wrapper */
+.pdf-container {
+  width: 100%;
+  height: 800px;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.15);
+  margin-bottom: 20px;
+}
+
+/* Reuse your existing .btn styles — already defined */
+.btn {
+  padding: 8px 12px;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: green;
+}

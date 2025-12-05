@@ -1,68 +1,60 @@
-@media screen and (max-width: 768px) {
-    .faq-section {
-        width: 100%;
-    }
-
-    .faq-row {
-        flex-direction: column;
-    }
-
-    .faq-item {
-        width: 100%;
-    }
-
-    .faq-question {
-        padding: 12px;
-        font-size: 17px;
-    }
-
-    .faq-answer {
-        font-size: 17px;
-        border-left: 3px solid #ff5722;
-    }
-
-
-}
-
 .faq-section {
-    width: 80%;
-    margin: 0 auto;
-    font-family: Arial, sans-serif;
-    text-align: center;
-
+  font-family: Arial, sans-serif;
+  text-align: center;
 }
 
-.faq-row {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
-
+/* Each card spacing */
 .faq-item {
-    margin-bottom: 20px;
-    flex: 0 0 48%;
-    box-sizing: border-box;
+  transition: transform 0.3s ease;
 }
 
+.faq-item:hover {
+  transform: translateY(-3px);
+}
+
+/* Question button */
 .faq-question {
-    background-color: #80a76a;
-    padding: 10px;
-    cursor: pointer;
-    border-radius: 5px;
-    display: flex;
-    justify-content: space-between;
+  background-color: #80a76a !important;
+  border: none !important;
+  color: #1d2430 !important;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+  padding: 12px 16px;
+  transition: background-color 0.2s ease;
 }
 
-.faq-question p {
-    font-size: 20px;
-    margin: 0;
-    color: #1d2430;
+.faq-question:hover {
+  background-color: #92b87c !important;
 }
 
+/* Answer styling */
 .faq-answer {
-    padding: 10px;
-    border-left: 3px solid #007bff;
-    margin-top: 5px;
-    border-radius: 5px;
-    font-size: 20px;
+  text-align: left;
+  font-size: 16px;
+  color: #333;
+  border-left: 4px solid #000;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+/* Adjust Bootstrap column spacing */
+.row.g-4 {
+  margin-top: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .col-md-6 {
+    flex: 0 0 48%;
+    max-width: 48%;
+  }
+}
+
+@media (max-width: 768px) {
+  .col-sm-12 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
 }

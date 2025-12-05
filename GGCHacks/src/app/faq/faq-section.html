@@ -1,15 +1,27 @@
-<div class="faq-section">
-    <h2>Frequently Asked Questions</h2>
-  <div class="faq-row">
-    <div *ngFor="let faq of faqs" class="faq-item">
-        <div class="faq-question" (click)="toggleAnswer(faq)">
-            <p>{{ faq.question }}</p>
-            <span *ngIf="faq.open">&#9650;</span> <!-- Up arrow when open -->
-            <span *ngIf="!faq.open">&#9660;</span> <!-- Down arrow when closed -->
+<section class="faq-section container py-5">
+  <h2 class="text-center mb-4">Frequently Asked Questions</h2>
+
+  <ng-container *ngIf="faqs.length > 0; else loading">
+    <div class="row g-4 justify-content-center">
+      <div class="col-md-6 col-lg-6" *ngFor="let faq of faqs">
+        <div class="faq-item h-100">
+          <button class="faq-question btn w-100 text-start"
+                  (click)="toggleAnswer(faq)">
+            {{ faq.question }}
+            <span class="float-end">
+              <i class="fas" [ngClass]="faq.open ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+            </span>
+          </button>
+
+          <div class="faq-answer border p-3 bg-light mt-2" *ngIf="faq.open">
+            {{ faq.answer }}
+          </div>
         </div>
-        <div class="faq-answer" *ngIf="faq.open">
-            <p>{{ faq.answer }}</p>
-        </div>
+      </div>
     </div>
-    </div>
-</div>
+  </ng-container>
+
+  <ng-template #loading>
+    <p class="text-center text-muted">Loading FAQs...</p>
+  </ng-template>
+</section>

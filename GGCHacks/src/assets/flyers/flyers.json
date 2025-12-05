@@ -1,0 +1,28 @@
+{
+  "activeFlyers": [
+    {
+      "id": "1",
+      "name": "GGC Event 1",
+      "imagePath": "https://i.imgur.com/YNHgBSx.jpeg",
+      "isActive": true,
+      "priority": 1,
+      "uploadedAt": "2025-01-15"
+    },
+    {
+      "id": "2",
+      "name": "GGC Event 2",
+      "imagePath": "assets/flyers/FakeFlyer1.jpg",
+      "isActive": true,
+      "priority": 2,
+      "uploadedAt": "2025-01-14"
+    },
+    {
+      "id": "3",
+      "name": "GGC Event 3",
+      "imagePath": "assets/flyers/FakeFlyer1.jpg",
+      "isActive": true,
+      "priority": 3,
+      "uploadedAt": "2025-01-13"
+    }
+  ]
+}

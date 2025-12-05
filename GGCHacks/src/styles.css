@@ -50,3 +50,23 @@ a{
 input, option, .form-control {
   border-radius: 2px !important;
 }
+
+nav.navbar {
+  position: relative;
+  z-index: 1000;   /* Make navbar clickable */
+}
+
+.pdf-container iframe {
+  display: block;
+  width: 100%;
+  height: 800px;
+  border: none;
+  position: relative;
+  z-index: 1;
+}
+
+/* Prevent iframe from covering navbar on some browsers */
+.pdf-container {
+  position: relative;
+  z-index: 1;
+}

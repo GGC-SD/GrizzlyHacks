@@ -1,73 +1,142 @@
+<!--<head>-->
+<!--  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">-->
+<!--</head>-->
+<!--<nav class="navbar navbar-expand-lg">-->
+<!--  <div class="container-fluid">-->
+<!--    <a class="navbar-brand" href="#">-->
+<!--      <picture>-->
+<!--        <img src="/assets/logo.png" class="img-fluid" width="100" height="100" alt="">-->
+<!--      </picture>-->
+<!--    </a>-->
+<!--    <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">-->
+<!--      <i class="bi bi-list" style="font-size: 1.5rem;"></i>-->
+<!--    </button>-->
+
+
+<!--    <div class="collapse navbar-collapse" id="navmenu">-->
+<!--      <ul class="navbar-nav ms-auto text-end w-100">-->
+<!--        &lt;!&ndash; Home Button &ndash;&gt;-->
+<!--        <li class="nav-item" routerLink="/home">-->
+<!--          <button class="btn btn-sm " type="button" routerLink="/home">Home</button>-->
+<!--        </li>-->
+
+<!--        &lt;!&ndash; Blog Button &ndash;&gt;-->
+<!--        <li class="nav-item">-->
+<!--          <button class="btn btn-sm " type="button" routerLink="/blogHome">Events!</button>-->
+<!--        </li>-->
+
+<!--        &lt;!&ndash; Login &ndash;&gt;-->
+<!--        <li class="nav-item" *ngIf="auth.user === null || !auth.verified">-->
+<!--          <button class="btn btn-sm " type="button" (click)="router.navigate(['login']);">Log In</button>-->
+<!--        </li>-->
+<!--        -->
+<!--        &lt;!&ndash;Admin Dashboard&ndash;&gt;-->
+<!--        <li class="nav-item" *ngIf="auth.user !== null && auth.verified && auth.adminLevel > 0">-->
+<!--          <button class="btn btn-sm " type="button" routerLink="/admin">Admin Dashboard</button>-->
+<!--        </li>-->
+
+<!--        &lt;!&ndash; Admin Timeline component &ndash;&gt;-->
+<!--        <li class="nav-item" *ngIf="auth.user !== null && auth.verified && auth.adminLevel > 0">-->
+<!--          <button class="btn btn-sm " type="button" routerLink="admin/timeline">View Schedule</button>-->
+<!--        </li>-->
+
+<!--        &lt;!&ndash; View Daily Schedule for non-admin users&ndash;&gt;-->
+<!--        <li class="nav-item" *ngIf="auth.user !== null && auth.verified">-->
+<!--          <button class="btn btn-sm " type="button" routerLink="/timeline">Registration</button>-->
+<!--        </li>-->
+
+<!--      &lt;!&ndash; Judge Tracker &ndash;&gt;-->
+<!--      <li class="nav-item" *ngIf="auth.user !== null && auth.verified && auth.adminLevel > 0">-->
+<!--        <button class="btn btn-sm btn-outline-secondary" type="button" routerLink="/judges">Submissions</button>-->
+<!--      </li>-->
+
+<!--&lt;!&ndash;      <li class="nav-item" *ngIf="auth.user !== null && auth.verified">&ndash;&gt;-->
+<!--&lt;!&ndash;        <button class="btn btn-sm btn-outline-secondary" type="button" routerLink="/project">Projects</button>&ndash;&gt;-->
+<!--&lt;!&ndash;      </li>&ndash;&gt;-->
+
+<!--        &lt;!&ndash; Sign Out &ndash;&gt;-->
+<!--        <li class="nav-item" *ngIf="auth.user !== null && auth.verified">-->
+<!--          <button class="btn btn-sm " type="button" (click)="auth.signOut()">Sign Out</button>-->
+<!--        </li>-->
+
+<!--      </ul>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</nav>-->
+
 <head>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    rel="stylesheet"
+  >
 </head>
+
 <nav class="navbar navbar-expand-lg">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">
+    <!-- Logo -->
+    <a class="navbar-brand" routerLink="/home">
       <picture>
-        <img src="/assets/logo.png" class="img-fluid" width="100" height="100" alt="">
+        <img src="/assets/logo.png" class="img-fluid" width="100" height="100" alt="GGC Logo">
       </picture>
     </a>
-    <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
+
+    <!-- Mobile Menu Toggle -->
+    <button
+      class="navbar-toggler text-white"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navmenu"
+    >
       <i class="bi bi-list" style="font-size: 1.5rem;"></i>
     </button>
 
-
+    <!-- Nav Links -->
     <div class="collapse navbar-collapse" id="navmenu">
       <ul class="navbar-nav ms-auto text-end w-100">
-        <!-- Home Button -->
-        <li class="nav-item" routerLink="/home">
-          <button class="btn btn-sm " type="button" routerLink="/home">Home</button>
-        </li>
 
-        <!-- Blog Button -->
+        <!-- Home -->
         <li class="nav-item">
-          <button class="btn btn-sm " type="button" routerLink="/blogHome">Events!</button>
+          <button class="btn btn-sm" routerLink="/home">Home</button>
         </li>
 
-        <!-- Login -->
-        <li class="nav-item" *ngIf="auth.user === null || !auth.verified">
-          <button class="btn btn-sm " type="button" (click)="router.navigate(['login']);">Log In</button>
+        <!-- Events (Public) -->
+        <li class="nav-item">
+          <button class="btn btn-sm" routerLink="/blogHome">Events</button>
         </li>
 
-        <!-- Create Account -->
-        <li class="nav-item" *ngIf="auth.user === null || !auth.verified">
-          <button class="btn btn-sm " type="button" (click)="router.navigate(['createAccount']);">Create
-            Account</button>
+        <li class="nav-item">
+          <button class="btn btn-sm btn-outline-secondary" routerLink="/judges">Overview</button>
         </li>
 
-        <!-- User Dashboard -->
-        <li class="nav-item" *ngIf="auth.user !== null && auth.verified">
-          <button class="btn btn-sm " type="button" routerLink="/user">User Dashboard</button>
+        <!-- View Schedule (Public) -->
+        <li class="nav-item">
+          <button class="btn btn-sm " type="button" routerLink="/timeline">View Schedule</button>
         </li>
 
-        <!--Admin Dashboard-->
-        <li class="nav-item" *ngIf="auth.user !== null && auth.verified && auth.adminLevel > 0">
-          <button class="btn btn-sm " type="button" routerLink="/admin">Admin Dashboard</button>
+        <!-- Registration (Public) -->
+        <li class="nav-item">
+<!--          <button class="btn btn-sm " type="button" routerLink="/registration">Registration</button>-->
+          <button
+            class="btn-primary btn-lg"
+            type="button"
+            (click)="openExternalLink('https://cglink.me/2rV/r386218')">
+            Registration
+          </button>
         </li>
 
-        <!-- Admin Timeline component -->
-        <li class="nav-item" *ngIf="auth.user !== null && auth.verified && auth.adminLevel > 0">
-          <button class="btn btn-sm " type="button" routerLink="admin/timeline">Manage Timeline</button>
+        <!-- Admin Dashboard (Admin Only) -->
+        <li class="nav-item" *ngIf="auth.user && auth.adminLevel > 0">
+          <button class="btn btn-sm" routerLink="/admin">Admin Dashboard</button>
         </li>
 
-        <!-- View Daily Schedule for non-admin users-->
-        <li class="nav-item" *ngIf="auth.user !== null && auth.verified">
-          <button class="btn btn-sm " type="button" routerLink="/timeline">View Daily Schedule</button>
+        <!-- Log In -->
+        <li class="nav-item" *ngIf="!auth.user">
+          <button class="btn btn-sm" (click)="router.navigate(['login'])">Log In</button>
         </li>
-
-      <!-- Judge Tracker -->
-      <li class="nav-item" *ngIf="auth.user !== null && auth.verified && auth.adminLevel > 0">
-        <button class="btn btn-sm btn-outline-secondary" type="button" routerLink="/judges">Judge Tracker</button>
-      </li>
-
-      <li class="nav-item" *ngIf="auth.user !== null && auth.verified">
-        <button class="btn btn-sm btn-outline-secondary" type="button" routerLink="/project">Projects</button>
-      </li>
 
         <!-- Sign Out -->
-        <li class="nav-item" *ngIf="auth.user !== null && auth.verified">
-          <button class="btn btn-sm " type="button" (click)="auth.signOut()">Sign Out</button>
+        <li class="nav-item" *ngIf="auth.user">
+          <button class="btn btn-sm" (click)="auth.signOut()">Sign Out</button>
         </li>
 
       </ul>

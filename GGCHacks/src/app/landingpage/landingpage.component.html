@@ -1,50 +1,85 @@
-<!--Hero Section-->
-<section id="hero" class="hero-section d-flex align-items-center">
-  <div class="container text-center">
-    <div class="row">
-      <div class="col-lg-12">
-        <h1 class="display-4">
-          <span class="typing-effect"></span><span class="cursor">|</span>
-        </h1>
-        <p class="lead">
-          We're a Student Organization that facilitates student involvement in off-campus hackathons and organizes
-          related on-campus events.
-        </p>
-        <button class="btn-primary btn-lg" type="button" (click)="router.navigate(['createAccount']);">Join Us</button>
-      </div>
-    </div>
+<!-- Hero Section -->
+<section id="hero" class="hero-section d-flex align-items-center text-center">
+  <div class="container">
+    <h1 class="display-4">
+      <span class="typing-effect"></span><span class="cursor">|</span>
+    </h1>
+    <p class="lead">
+      We're a Student Organization that facilitates student involvement in off-campus hackathons and organizes related on-campus events.
+    </p>
+    <button
+      class="btn-primary btn-lg"
+      type="button"
+      (click)="openExternalLink('https://ggc.campusgroups.com/feeds?type=club&type_id=35493&tab=about')">
+      Join Us
+    </button>
   </div>
 </section>
-
-<!-- Divider Image -->
-<!-- <img src="assets/images/HomeImageDivider.jpg" class="full-width-divider" alt="divider-image"> -->
 
 <!-- Features Header -->
-<section class="features-header-section">
-  <div>
-    <h2 class="features-header">FEATURED EVENTS</h2>
-  </div>
+<section class="features-header-section text-center">
+  <h2 class="features-header">UPCOMING EVENTS</h2>
 </section>
 
-<!-- Features Section -->
 <section class="features-section">
   <div class="container">
-    <div class="row justify-content-center">
-      <!-- Feature 1 -->
-      <div class="feature-card">
-        <img src="assets/images/GGCEvent1.png" alt="24/7 Monitoring" class="feature-image">
-      </div>
-      <!-- Feature 2 -->
-      <div class="feature-card">
-        <img src="assets/images/GGCEvent3.png" alt="Connecting Beyond Code" class="feature-image">
-      </div>
-      <!-- Feature 3 -->
-      <div class="feature-card">
-        <img src="assets/images/GGCEvent2.png" alt="Sharpening Coding Skills" class="feature-image">
-      </div>
+    <div class="flyer-grid">
+      <!-- Show shimmer while flyers load -->
+      <ng-container *ngIf="!flyersLoaded; else flyerContent">
+        <div class="loading-placeholder">
+          <div class="skeleton"></div>
+          <div class="skeleton"></div>
+          <div class="skeleton"></div>
+        </div>
+      </ng-container>3
+
+      <ng-template #flyerContent>
+        <div
+          class="feature-card"
+          *ngFor="let flyer of flyers"
+          (click)="openFlyerModal(flyer)"
+        >
+          <img
+            class="feature-image"
+            [src]="flyer.imageUrl"
+            [alt]="flyer.title"
+            (error)="onImageError($event)"
+          />
+
+<!--          &lt;!&ndash; Overlay Text (Title + Description) &ndash;&gt;-->
+<!--          <div class="flyer-overlay">-->
+<!--            <h3>{{ flyer.title }}</h3>-->
+<!--            <p>{{ flyer.description }}</p>-->
+<!--            <a *ngIf="flyer.linkUrl"-->
+<!--               class="flyer-link"-->
+<!--               [href]="flyer.linkUrl"-->
+<!--               target="_blank"-->
+<!--               (click)="$event.stopPropagation()">-->
+<!--              Learn More-->
+<!--            </a>-->
+<!--          </div>-->
+        </div>
+      </ng-template>
+
     </div>
   </div>
+
+  <!-- Image Modal -->
+  <div class="flyer-modal" *ngIf="selectedFlyer" (click)="closeFlyerModal()">
+    <div class="flyer-modal-content" (click)="$event.stopPropagation()">
+      <img
+        [src]="selectedFlyer.imageUrl"
+        [alt]="selectedFlyer.title"
+        (error)="onImageError($event)"
+      />
+      <button class="close-btn" (click)="closeFlyerModal()">×</button>
+    </div>
+  </div>
+
 </section>
+
+
+
 
 <app-faq></app-faq>
 <app-sponsor></app-sponsor>
