@@ -67,23 +67,50 @@
 /* Order Badge */
 .order-badge {
   position: absolute;
-  top: 10px;
-  right: 60px;
+  top: 15px;
+  left: 750px;
   font-size: 12px;
   padding: 4px 8px;
   background: #667eea !important;
   font-weight: 600;
+  border-radius: 6px;
 }
 
-/* Delete Button */
 .delete-btn {
   position: absolute;
   top: 10px;
-  right: 10px;
-  padding: 4px 8px;
-  font-size: 12px;
-  opacity: 0.8;
-  transition: opacity 0.2s ease;
+  right: 12px;
+
+  background-color: #e76f51;
+  color: white;
+  border: none;
+  border-radius: 8px;
+
+  padding: 4px 10px;      /* smaller, compact padding */
+  font-size: 13px;        /* reduces height visually */
+  font-weight: 600;       /* matches your bold UI */
+
+  height: 28px;           /* forces consistent size */
+  line-height: 20px;      /* centers text vertically */
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  cursor: pointer;
+  opacity: 0.9;
+  transition: opacity 0.2s ease, transform 0.15s ease;
+}
+
+.delete-btn:hover {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+.delete-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 
 /* When dragging */
@@ -137,4 +164,27 @@
   cursor: auto !important;
   pointer-events: auto !important;
 }
-/* Rest of your existing CSS... */
+
+.photo-array-editor {
+  margin-bottom: 20px;
+}
+
+.photo-list {
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 10px;
+  background: #f8f9fa;
+}
+
+.btn-outline-success {
+  background-color: #e0e0e0 !important;
+  border-color: #004d40 !important;
+  color: #000000 !important;
+}
+
+.btn-outline-success:hover,
+.btn-outline-success:focus {
+  background-color: #c8e6c9 !important; /* light green */
+  border-color: #004d40 !important;
+  color: #000000 !important;
+}

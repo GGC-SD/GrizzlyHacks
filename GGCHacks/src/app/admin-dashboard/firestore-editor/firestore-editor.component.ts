@@ -25,7 +25,8 @@ export class FirestoreEditorComponent implements OnInit {
   private fieldOrder = {
     faqs: ['question', 'answer', 'isActive'],
     sponsors: ['name', 'tier', 'website', 'logoUrl', 'isActive'],
-    flyers: ['title', 'description', 'imageUrl', 'linkUrl', 'isActive']
+    flyers: ['title', 'description', 'imageUrl', 'linkUrl', 'isActive'],
+    galleries: ['eventName', 'eventDate', 'description', 'coverImage', 'photos', 'isActive']
   };
 
   // Fields to exclude from display for each collection
@@ -128,7 +129,7 @@ export class FirestoreEditorComponent implements OnInit {
     }
   }
 
-  async updateFirestoreDoc(doc: FirestoreDocument, silent: boolean = false): Promise<void> {
+  async updateFirestoreDoc(doc: FirestoreDocument, silent = false): Promise<void> {
     if (this.isFlyerCollection) {
       if (this.firestoreDocs.length < 1) {
         alert("At least 1 flyer is required.");
@@ -289,6 +290,39 @@ export class FirestoreEditorComponent implements OnInit {
     }
   }
 
+  async addNewGallery(): Promise<void> {
+    const eventName = prompt('Enter the event name (e.g., "GGC Hacks 2024"):');
+    if (!eventName) return;
+
+    const eventDate = prompt('Enter the event date (e.g., "November 9, 2024"):');
+    if (!eventDate) return;
+
+    const description = prompt('Enter a brief description:');
+
+    const newOrder = this.firestoreDocs.length > 0
+      ? Math.max(...this.firestoreDocs.map(d => d.order || 0)) + 1
+      : 1;
+
+    const newGallery = {
+      eventName,
+      eventDate,
+      description: description || '',
+      coverImage: '',
+      photos: [],
+      isActive: true,
+      order: newOrder
+    };
+
+    try {
+      const docRef = await this.firestore.collection('galleries').add(newGallery);
+      console.log('New gallery added with ID:', docRef.id);
+      alert('Gallery added successfully! Add photos using the editor.');
+    } catch (error) {
+      console.error('Error adding gallery:', error);
+      alert('Failed to add gallery. Please try again.');
+    }
+  }
+
   getKeys(doc: any): string[] {
     // Get the predefined field order for this collection
     const orderedFields = this.fieldOrder[this.selectedCollection as keyof typeof this.fieldOrder] || [];
@@ -326,6 +360,8 @@ export class FirestoreEditorComponent implements OnInit {
   }
 
   getInputType(key: string, value: any): string {
+    if (key === 'photos' && Array.isArray(value)) return 'photoArray';
+    if (key === 'coverImage') return 'url';
     if (typeof value === 'boolean') return 'checkbox';
     if (typeof value === 'string') {
       if (key.toLowerCase().includes('url') ||
@@ -341,6 +377,22 @@ export class FirestoreEditorComponent implements OnInit {
       }
     }
     return 'text';
+  }
+
+  addPhotoToGallery(doc: any): void {
+    const photoUrl = prompt('Enter photo URL:');
+    if (photoUrl) {
+      if (!doc.photos) {
+        doc.photos = [];
+      }
+      doc.photos.push(photoUrl.trim());
+    }
+  }
+
+  removePhotoFromGallery(doc: any, index: number): void {
+    if (doc.photos && doc.photos.length > index) {
+      doc.photos.splice(index, 1);
+    }
   }
 
   formatFieldLabel(key: string): string {
