@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
-import { map } from 'rxjs/operators';
 
 interface EventGallery {
   id?: string;
@@ -13,7 +10,6 @@ interface EventGallery {
   coverImage?: string;
   order?: number;
   isActive: boolean;
-  createdAt?: Date;
 }
 
 @Component({
@@ -27,11 +23,7 @@ export class BlogHomeComponent implements OnInit {
   selectedGallery: EventGallery | null = null;
   selectedPhotoIndex = 0;
 
-  constructor(
-    private firestore: AngularFirestore,
-    private router: Router,
-    public auth: AuthService
-  ) {}
+  constructor(private firestore: AngularFirestore) {}
 
   ngOnInit(): void {
     this.loadGalleries();

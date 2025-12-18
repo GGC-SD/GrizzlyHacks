@@ -1,16 +1,16 @@
-<!--<div class="sponsor-section">-->
-<!--  <h2>Our Sponsors!</h2>-->
+<div class="sponsor-section">
+  <h2>Our Sponsors!</h2>
 
-<!--  <div *ngIf="sponsors.length > 0; else loadingSponsors" class="sponsor-row">-->
-<!--    <div class="sponsor-item" *ngFor="let sponsor of sponsors">-->
-<!--      <a *ngIf="sponsor.link" [href]="sponsor.link" target="_blank">-->
-<!--        <img [src]="sponsor.imagePath" [alt]="sponsor.name" class="sponsor-logo">-->
-<!--      </a>-->
-<!--      <img *ngIf="!sponsor.link" [src]="sponsor.imagePath" [alt]="sponsor.name" class="sponsor-logo">-->
-<!--    </div>-->
-<!--  </div>-->
+  <div *ngIf="sponsors.length > 0; else loadingSponsors" class="sponsor-row">
+    <div class="sponsor-item" *ngFor="let sponsor of sponsors">
+      <a *ngIf="sponsor.link" [href]="sponsor.link" target="_blank">
+        <img [src]="sponsor.imagePath" [alt]="sponsor.name" class="sponsor-logo">
+      </a>
+      <img *ngIf="!sponsor.link" [src]="sponsor.imagePath" [alt]="sponsor.name" class="sponsor-logo">
+    </div>
+  </div>
 
-<!--  <ng-template #loadingSponsors>-->
-<!--    <p>Loading sponsors...</p>-->
-<!--  </ng-template>-->
-<!--</div>-->
+  <ng-template #loadingSponsors>
+    <p>Loading sponsors...</p>
+  </ng-template>
+</div>

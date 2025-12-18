@@ -22,6 +22,7 @@
         <option value="faqs">FAQs</option>
         <option value="sponsors">Sponsors</option>
         <option value="flyers">Flyers</option>
+        <option value="galleries">Event Galleries</option>
       </select>
     </div>
 
@@ -51,11 +52,11 @@
     </span>
 
         <!-- Delete Button (Top Right) -->
-        <button class="btn btn-sm btn-danger delete-btn"
+        <button class="delete-btn"
                 (click)="deleteFirestoreDoc(doc)"
                 [disabled]="flyerMinimumReached"
                 title="Delete Document">
-        <i class="fas fa-trash"></i>
+          <i class="fas fa-trash"></i> Delete
         </button>
 
         <!-- Document Content (NOT draggable) -->
@@ -70,8 +71,8 @@
             <div *ngFor="let key of getKeys(doc)" class="field-group">
 
               <!-- Field Label -->
-              <label class="form-label fw-semibold">
-                {{ formatFieldLabel(key) }}:
+              <label *ngIf="key !== 'isActive'">
+                {{ formatFieldLabel(key) }}
               </label>
 
               <!-- Text Input -->
@@ -105,6 +106,36 @@
                 <label class="form-check-label" [for]="'check-' + i + '-' + key">
                   {{ doc[key] ? 'Active' : 'Inactive' }}
                 </label>
+              </div>
+
+              <!-- Photo Array Editor -->
+              <div *ngIf="getInputType(key, doc[key]) === 'photoArray'" class="photo-array-editor">
+                <label class="form-label fw-semibold">{{ formatFieldLabel(key) }}:</label>
+
+                <!-- Display existing photos -->
+                <div class="photo-list mb-2">
+                  <div *ngFor="let photo of doc[key]; let photoIndex = index" class="photo-item mb-2">
+                    <div class="input-group">
+                      <input type="url"
+                             class="form-control form-control-sm"
+                             [(ngModel)]="doc[key][photoIndex]"
+                             placeholder="Photo URL">
+                      <button class="btn btn-danger btn-sm"
+                              (click)="removePhotoFromGallery(doc, photoIndex)">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </div>
+                    <img [src]="photo"
+                         style="max-height: 100px; max-width: 100%; margin-top: 5px;"
+                         (error)="$event.target.style.display='none'">
+                  </div>
+                </div>
+
+                <!-- Add new photo button -->
+                <button class="btn btn-outline-primary btn-sm"
+                        (click)="addPhotoToGallery(doc)">
+                  <i class="fas fa-plus"></i> Add Photo
+                </button>
               </div>
             </div>
           </div>
@@ -154,6 +185,13 @@
           <i class="fas fa-plus me-1"></i> Add New Flyer
         </button>
       </div>
+    </div>
+
+    <!-- Add New Gallery Button -->
+    <div *ngIf="selectedCollection === 'galleries'" class="text-center">
+      <button class="btn btn-outline-success" (click)="addNewGallery()">
+        <i class="fas fa-plus me-1"></i> Add New Gallery
+      </button>
     </div>
 
     <!-- Empty State Message -->
