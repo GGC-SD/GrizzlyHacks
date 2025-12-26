@@ -6,7 +6,30 @@
 
 The Grizzly Hacks client, which is a RSO of people who are interested in Hackathons, has tasked the team to work on their previous website, update it with modern features, and to add new components that will allow the clients and future users to access a website that will easily portray news, host events, and provide information about previous Hackathons. The website should have different authentication levels that allow admins to easily edit and add new information onto the website, while users to gain access to features so they can join feature Hackathons and post submissions for current events.
 
-### Updates Spring 2025
+## Updates Fall 2025
+
+During Fall 2025, work on the Grizzly Hacks website focused on improving structure, usability, and content management. Updates were made to clean up older code, simplify the site layout, and make it easier to update content through Firebase without editing code. The website was adjusted to better support current hackathon needs and general information for users.
+
+### Website Changes and Updates
+
+- Removed unused and outdated features to simplify the codebase.
+- Cleaned up routes and file names to reduce confusion and prevent broken pages.
+- Redesigned the landing page with improved layout, spacing, and visual styling.
+- Added a reusable schedule and timeline page that pulls content from Firebase.
+- Implemented dynamic FAQ and sponsor sections that update automatically when edited in Firebase.
+- Updated the registration page to use an embedded Google Form that can be managed through Firebase.
+- Built a Firestore content editor that allows admins to edit flyers, FAQs, schedules, events, and archive content directly from the website.
+- Fixed issues related to document IDs, indexing, and queries so content updates correctly.
+- Added drag-and-drop reordering for admin-managed content and adjusted Firebase data structure to support ordering.
+- Improved loading behavior by adding placeholder effects for image-heavy sections.
+- Made flyers and schedules clickable with expanded views for easier reading.
+- Simplified and standardized CSS to improve consistency and reduce unnecessary spacing.
+- Adjusted authentication logic so public pages are accessible without requiring login.
+- Archived non-essential sections to keep the site focused and easier to maintain.
+- Added an archive page and connected it to the admin editor for managing past content.
+- Updated the website branding to use official Grizzly Hacks logos and assets.
+
+## Updates Spring 2025
 This semester, my team and I worked on improving the Grizzly Hacks website. We met regularly with the Grizzly Hacks officers, Dr. Anca, and Dr. Gunay to get feedback and make updates. Most of our work focused on cleaning up the pages, making the UI more user-friendly, and adding new features—like a timeline page to help users keep track of important dates. It’s been a great learning experience and a solid chance to apply what we’ve been learning in class to something real.
 
 <br></br>
