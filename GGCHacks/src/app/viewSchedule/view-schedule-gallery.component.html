@@ -1,0 +1,87 @@
+<div class="gallery-container">
+  <!-- Hero Section -->
+  <div class="gallery-hero">
+    <h1>View Schedule</h1>
+    <p>See important dates and times for our events</p>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading-container">
+    <div class="spinner-border text-primary" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+
+  <!-- Grid -->
+  <div *ngIf="!isLoading" class="galleries-section">
+    <div class="container">
+      <div class="row">
+        <div *ngFor="let item of scheduleItems" class="col-lg-4 col-md-6 mb-4">
+          <div class="gallery-card">
+            <!-- Cover Image -->
+            <div class="gallery-image" (click)="openLightbox(item, 0)">
+              <img [src]="getCoverImage(item)" [alt]="item.title">
+              <div class="photo-count">
+                <i class="fas fa-camera"></i> {{ item.photos?.length || 0 }}
+              </div>
+            </div>
+
+            <!-- Info -->
+            <div class="gallery-body">
+              <h3>{{ item.title }}</h3>
+
+              <p class="event-date">
+                <i class="fas fa-calendar"></i> {{ item.date }}
+              </p>
+
+              <p class="description">{{ item.description }}</p>
+
+              <!-- Preview thumbs -->
+              <div class="photo-grid-preview" *ngIf="item.photos?.length">
+                <div *ngFor="let photo of item.photos.slice(0, 4); let i = index"
+                     class="photo-thumb"
+                     (click)="openLightbox(item, i)">
+                  <img [src]="photo" [alt]="'Photo ' + (i + 1)">
+                  <div *ngIf="i === 3 && item.photos.length > 4" class="more-overlay">
+                    +{{ item.photos.length - 4 }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Empty State -->
+      <div *ngIf="scheduleItems.length === 0" class="empty-state">
+        <i class="fas fa-calendar fa-4x"></i>
+        <h3>No schedule items yet</h3>
+        <p>Check back soon for updates.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lightbox Modal -->
+  <div *ngIf="selectedItem" class="lightbox" (click)="closeLightbox()">
+    <div class="lightbox-content" (click)="$event.stopPropagation()">
+      <button class="btn-close" (click)="closeLightbox()">×</button>
+
+      <button class="btn-nav btn-prev" (click)="previousPhoto()"
+              *ngIf="selectedItem.photos.length > 1">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+
+      <img [src]="selectedItem.photos[selectedPhotoIndex]"
+           [alt]="selectedItem.title">
+
+      <button class="btn-nav btn-next" (click)="nextPhoto()"
+              *ngIf="selectedItem.photos.length > 1">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+
+      <div class="photo-counter">
+        {{ selectedPhotoIndex + 1 }} / {{ selectedItem.photos.length }}
+      </div>
+    </div>
+  </div>
+</div>

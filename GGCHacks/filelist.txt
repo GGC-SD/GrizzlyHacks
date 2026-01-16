@@ -56,10 +56,10 @@
 ./src/app/admin-dashboard/admin-dashboard.component.ts
 ./src/app/admin-dashboard/user-query.pipe.ts
 ./src/app/app.module.ts
-./src/app/blog/blog-home/blog-home.component.spec.ts
+./src/app/blog/blog-home/event-gallery.component.spec.ts
 ./src/app/blog/blog-home/blog-home.component.css
-./src/app/blog/blog-home/blog-home.component.html
-./src/app/blog/blog-home/blog-home.component.ts
+./src/app/blog/blog-home/event-gallery.component.html
+./src/app/blog/blog-home/event-gallery.component.ts
 ./src/app/blog/blog-home/edit-blog-modal/edit-blog-modal.component.spec.ts
 ./src/app/blog/blog-home/edit-blog-modal/edit-blog-modal.component.html
 ./src/app/blog/blog-home/edit-blog-modal/edit-blog-modal.component.css

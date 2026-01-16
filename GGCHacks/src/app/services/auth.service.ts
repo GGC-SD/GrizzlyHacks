@@ -136,15 +136,13 @@ export class AuthService implements OnDestroy {
     userRef.update(this.user);
   }
 
-  public signOut() {
-    this.verified = false;
-    this.adminLevel = 0;
-    this.afAuth.signOut().then( result => {
-      alert('Signed Out');
-      this.router.navigate(['/home']);
-    }, otherError => {
-      alert('Try Again');
-    });
+  async signOut(): Promise<void> {
+    try {
+      await this.afAuth.signOut();
+      this.router.navigate(['/']);
+    } catch (error) {
+      console.error('Error signing out:', error);
+    }
   }
 
   saveApplication() {

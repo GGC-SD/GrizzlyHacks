@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { BlogHomeComponent } from 'src/app/blog/blog-home/blog-home.component';
+import { EventGalleryComponent } from 'src/app/event-gallery/event-gallery/event-gallery.component';
 import { AuthService } from 'src/app/services/auth.service';
 import { BlogService, Blog } from 'src/app/services/blog.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -12,12 +12,12 @@ class MockBlogService {
 class MockNgbModal {}
 
 describe('BlogHomeComponent', () => {
-  let component: BlogHomeComponent;
-  let fixture: ComponentFixture<BlogHomeComponent>;
+  let component: EventGalleryComponent;
+  let fixture: ComponentFixture<EventGalleryComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [BlogHomeComponent],
+      declarations: [EventGalleryComponent],
       providers: [
         { provide: AuthService, useClass: MockAuthService },
         { provide: BlogService, useClass: MockBlogService },
@@ -25,7 +25,7 @@ describe('BlogHomeComponent', () => {
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(BlogHomeComponent);
+    fixture = TestBed.createComponent(EventGalleryComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

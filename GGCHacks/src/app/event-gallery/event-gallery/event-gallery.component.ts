@@ -5,6 +5,7 @@ interface EventGallery {
   id?: string;
   eventName: string;
   eventDate: string;
+  linkedinUrl?: string;
   description: string;
   photos: string[];
   coverImage?: string;
@@ -14,10 +15,10 @@ interface EventGallery {
 
 @Component({
   selector: 'app-blog-home',
-  templateUrl: './blog-home.component.html',
-  styleUrls: ['./blog-home.component.css']
+  templateUrl: './event-gallery.component.html',
+  styleUrls: ['./event-gallery.component.css']
 })
-export class BlogHomeComponent implements OnInit {
+export class EventGalleryComponent implements OnInit {
   galleries: EventGallery[] = [];
   isLoading = true;
   selectedGallery: EventGallery | null = null;

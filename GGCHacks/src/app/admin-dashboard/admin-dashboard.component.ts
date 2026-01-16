@@ -7,7 +7,6 @@ import {
 } from "@angular/fire/compat/firestore";
 import { AngularFireStorage } from "@angular/fire/compat/storage";
 import { AuthService } from "../services/auth.service";
-import { Event } from "../EventCalendarStuff/event";
 
 @Component({
   selector: "app-admin-dashboard",
