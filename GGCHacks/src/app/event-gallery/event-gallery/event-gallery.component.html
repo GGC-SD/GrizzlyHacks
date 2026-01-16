@@ -32,6 +32,13 @@
               <p class="event-date">
                 <i class="fas fa-calendar"></i> {{ gallery.eventDate }}
               </p>
+              <a *ngIf="gallery.linkedinUrl"
+                 [href]="gallery.linkedinUrl"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 class="linkedin-link">
+                <i class="fab fa-linkedin"></i> View on LinkedIn
+              </a>
               <p class="description">{{ gallery.description }}</p>
 
               <!-- Photo Grid Preview -->
@@ -61,25 +68,31 @@
 
   <!-- Lightbox Modal -->
   <div *ngIf="selectedGallery" class="lightbox" (click)="closeLightbox()">
+    <button class="btn-nav btn-prev"
+            (click)="$event.stopPropagation(); previousPhoto()"
+            type="button"
+            aria-label="Previous photo"
+            *ngIf="selectedGallery.photos.length > 1">
+      &#10094;
+    </button>
+
     <div class="lightbox-content" (click)="$event.stopPropagation()">
-      <button class="btn-close" (click)="closeLightbox()">×</button>
-
-      <button class="btn-nav btn-prev" (click)="previousPhoto()"
-              *ngIf="selectedGallery.photos.length > 1">
-        <i class="fas fa-chevron-left"></i>
-      </button>
-
       <img [src]="selectedGallery.photos[selectedPhotoIndex]"
            [alt]="selectedGallery.eventName">
+    </div>
 
-      <button class="btn-nav btn-next" (click)="nextPhoto()"
-              *ngIf="selectedGallery.photos.length > 1">
-        <i class="fas fa-chevron-right"></i>
-      </button>
+    <button class="btn-nav btn-next"
+            (click)="$event.stopPropagation(); nextPhoto()"
+            type="button"
+            aria-label="Next photo"
+            *ngIf="selectedGallery.photos.length > 1">
+      &#10095;
+    </button>
 
-      <div class="photo-counter">
-        {{ selectedPhotoIndex + 1 }} / {{ selectedGallery.photos.length }}
-      </div>
+    <button class="btn-close" (click)="closeLightbox()">×</button>
+
+    <div class="photo-counter">
+      {{ selectedPhotoIndex + 1 }} / {{ selectedGallery.photos.length }}
     </div>
   </div>
 </div>

@@ -22,8 +22,6 @@ button {
 }
 
 
-
-
 @media (max-width: 344px) and (max-height: 882px) {
   .navbar-brand {
     width: 55px !important;

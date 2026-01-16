@@ -26,7 +26,7 @@ export class FirestoreEditorComponent implements OnInit {
     faqs: ['question', 'answer', 'isActive'],
     sponsors: ['name', 'tier', 'website', 'logoUrl', 'isActive'],
     flyers: ['title', 'description', 'imageUrl', 'linkUrl', 'isActive'],
-    galleries: ['eventName', 'eventDate', 'description', 'coverImage', 'photos', 'isActive']
+    galleries: ['eventName', 'eventDate', 'linkedinUrl', 'description', 'coverImage', 'photos', 'isActive']
   };
 
   // Fields to exclude from display for each collection
@@ -57,6 +57,12 @@ export class FirestoreEditorComponent implements OnInit {
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as FirestoreDocument;
           const documentId = a.payload.doc.id;
+
+          // Ensure galleries have linkedinUrl field
+          if (collection === 'galleries' && data.linkedinUrl === undefined) {
+            data.linkedinUrl = '';
+          }
+
           return { documentId, ...data };
         }))
       )
@@ -72,7 +78,40 @@ export class FirestoreEditorComponent implements OnInit {
         if (this.firestoreDocs.some(doc => doc.order === undefined)) {
           this.assignOrderValues();
         }
+
+        // Migrate galleries to include linkedinUrl if missing
+        if (collection === 'galleries') {
+          this.migrateGalleries();
+        }
       });
+  }
+
+  async migrateGalleries(): Promise<void> {
+    const galleriesWithoutLinkedin = this.firestoreDocs.filter(
+      doc => doc.linkedinUrl === undefined || doc.linkedinUrl === null
+    );
+
+    if (galleriesWithoutLinkedin.length > 0) {
+      console.log(`Migrating ${galleriesWithoutLinkedin.length} galleries to include linkedinUrl field...`);
+
+      const batch = this.firestore.firestore.batch();
+
+      galleriesWithoutLinkedin.forEach(doc => {
+        if (doc.documentId) {
+          const docRef = this.firestore.firestore
+            .collection('galleries')
+            .doc(doc.documentId);
+          batch.update(docRef, { linkedinUrl: '' });
+        }
+      });
+
+      try {
+        await batch.commit();
+        console.log('Gallery migration complete!');
+      } catch (error) {
+        console.error('Error migrating galleries:', error);
+      }
+    }
   }
 
   onDrop(event: CdkDragDrop<FirestoreDocument[]>): void {
@@ -297,6 +336,8 @@ export class FirestoreEditorComponent implements OnInit {
     const eventDate = prompt('Enter the event date (e.g., "November 9, 2024"):');
     if (!eventDate) return;
 
+    const linkedinUrl = prompt('Enter the LinkedIn post URL (optional):');
+
     const description = prompt('Enter a brief description:');
 
     const newOrder = this.firestoreDocs.length > 0
@@ -306,6 +347,7 @@ export class FirestoreEditorComponent implements OnInit {
     const newGallery = {
       eventName,
       eventDate,
+      linkedinUrl: linkedinUrl || '',
       description: description || '',
       coverImage: '',
       photos: [],
@@ -432,5 +474,4 @@ export class FirestoreEditorComponent implements OnInit {
   }
 
 }
-
 
