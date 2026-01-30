@@ -22,6 +22,7 @@ export class AuthService implements OnDestroy {
   sub2: Subscription;
   verified: boolean;
   adminLevel: number;
+  private isSigningOut = false; // Flag to prevent auto-login during sign out
 
   constructor(
     public afAuth: AngularFireAuth,
@@ -32,12 +33,18 @@ export class AuthService implements OnDestroy {
     this.adminLevel = 0;
     this.verified = false;
     this.sub2 = afAuth.user.subscribe( user => {
+      // Skip processing if we're in the middle of signing out
+      if (this.isSigningOut) {
+        return;
+      }
+
       this.verified = false;
       if (user) {
         this.verified = user.emailVerified;
         this.setUser(user);
       } else {
         this.user = null;
+        this.adminLevel = 0;
       }
 
     });
@@ -138,10 +145,39 @@ export class AuthService implements OnDestroy {
 
   async signOut(): Promise<void> {
     try {
+      // Set flag to prevent auto-login
+      this.isSigningOut = true;
+
+      // Clear local user data first
+      this.user = null;
+      this.adminLevel = 0;
+      this.verified = false;
+
+      // Unsubscribe from user document listener
+      if (this.sub) {
+        this.sub.unsubscribe();
+        this.sub = null;
+      }
+
+      // Sign out from Firebase
       await this.afAuth.signOut();
-      this.router.navigate(['/']);
+
+      // Clear any stored session data
+      localStorage.clear();
+      sessionStorage.clear();
+
+      // Navigate to home
+      await this.router.navigate(['/home']);
+
+      // Reset the flag after navigation
+      this.isSigningOut = false;
+
+      console.log('User signed out successfully');
     } catch (error) {
       console.error('Error signing out:', error);
+      this.isSigningOut = false;
+      // Force navigation even if there's an error
+      window.location.href = '/home';
     }
   }
 

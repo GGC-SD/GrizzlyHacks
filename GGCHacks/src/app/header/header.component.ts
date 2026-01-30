@@ -19,4 +19,7 @@ export class HeaderComponent implements OnInit {
     window.open(url, 'https://ggc.campusgroups.com/feeds?type=club&type_id=35493&tab=about');
   }
 
+  async signOut(): Promise<void> {
+    await this.auth.signOut();
+  }
 }
