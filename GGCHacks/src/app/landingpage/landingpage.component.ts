@@ -2,14 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-landingpage',
   templateUrl: './landingpage.component.html',
   styleUrls: ['./landingpage.component.css']
 })
-
 
 export class LandingpageComponent implements OnInit {
   flyers: any[] = [];
@@ -30,9 +28,8 @@ export class LandingpageComponent implements OnInit {
     // Handle feature header animations
     this.initFeatureHeaderScroll();
 
+    // Load flyers only - FAQ and Sponsors handled by their own components
     this.loadFlyers();
-
-    // this.seedFlyers()
   }
 
   openFlyerModal(flyer: any) {
@@ -122,7 +119,6 @@ export class LandingpageComponent implements OnInit {
       });
   }
 
-
   //used to initialize firestore with some flyers
   seedFlyers() {
     const flyersJson = {
@@ -205,8 +201,5 @@ export class LandingpageComponent implements OnInit {
   openExternalLink(url: string): void {
     window.open(url, 'https://ggc.campusgroups.com/feeds?type=club&type_id=35493&tab=about');
   }
+
 }
-
-
-
-

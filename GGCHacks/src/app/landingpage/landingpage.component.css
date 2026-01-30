@@ -21,7 +21,6 @@ h1 {
 /* Hero Section */
 .hero-section {
   padding: 80px 0;
-  background: linear-gradient(180deg, #1d2430, #2c3a4a);
   color: white;
   text-align: center;
 }
@@ -227,4 +226,3 @@ h1 {
   padding-top: .5rem !important;
   padding-bottom: .5rem !important;
 }
-
