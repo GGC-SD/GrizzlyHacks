@@ -16,7 +16,7 @@ export class HeaderComponent implements OnInit {
   }
 
   openExternalLink(url: string): void {
-    window.open(url, 'https://ggc.campusgroups.com/feeds?type=club&type_id=35493&tab=about');
+    window.open(url);
   }
 
   async signOut(): Promise<void> {

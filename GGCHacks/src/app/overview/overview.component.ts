@@ -20,6 +20,7 @@ interface ScheduleItem {
 export class OverviewComponent implements OnInit {
   scheduleItems: ScheduleItem[] = [];
   isLoading = true;
+  collectionName = "schedule-sp26";
 
   selectedItem: ScheduleItem | null = null;
   selectedPhotoIndex = 0;
@@ -31,7 +32,7 @@ export class OverviewComponent implements OnInit {
   }
 
   loadScheduleItems(): void {
-    this.firestore.collection<ScheduleItem>('schedule', ref =>
+    this.firestore.collection<ScheduleItem>(this.collectionName, ref =>
       ref.where('isActive', '==', true).orderBy('order', 'asc')
     )
       .valueChanges({ idField: 'id' })
@@ -42,7 +43,7 @@ export class OverviewComponent implements OnInit {
         },
         error: () => {
           // Fallback if compound index/order isn't available
-          this.firestore.collection<ScheduleItem>('schedule', ref =>
+          this.firestore.collection<ScheduleItem>(this.collectionName, ref =>
             ref.where('isActive', '==', true)
           )
             .valueChanges({ idField: 'id' })
